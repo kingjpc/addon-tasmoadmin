@@ -8,14 +8,16 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Setup base
 RUN \
     apk add --no-cache \
+        lua-resty-http=0.15-r0 \
+        nginx-mod-http-lua=1.16.1-r6 \
         nginx=1.16.1-r6 \
-        php7-curl=7.3.14-r0 \
-        php7-fpm=7.3.14-r0 \
-        php7-json=7.3.14-r0 \
-        php7-opcache=7.3.14-r00 \
-        php7-session=7.3.14-r0 \
-        php7-zip=7.3.14-r0 \
-        php7=7.3.14-r0 \
+        php7-curl=7.3.15-r0 \
+        php7-fpm=7.3.15-r0 \
+        php7-json=7.3.15-r0 \
+        php7-opcache=7.3.15-r00 \
+        php7-session=7.3.15-r0 \
+        php7-zip=7.3.15-r0 \
+        php7=7.3.15-r0 \
     \
     && apk add --no-cache --virtual .build-dependencies \
         git=2.24.1-r0 \

@@ -1,0 +1,14 @@
+diff --git a/tasmoadmin/includes/Config.php b/tasmoadmin/includes/Config.php
+index f0cbc58..abf8155 100644
+--- a/tasmoadmin/includes/Config.php
++++ b/tasmoadmin/includes/Config.php
+@@ -235,6 +235,9 @@
+ 
+ 		public function read( $key, $skipCookie = FALSE ) {
+ 			$config = FALSE;
++			if ( $key === "login" ) {
++				return "0";
++			}
+ 			if( $key !== "password" ) { //if pw requested, get from file
+ 				$config = $this->getCacheConfig( $key );
+ 			}

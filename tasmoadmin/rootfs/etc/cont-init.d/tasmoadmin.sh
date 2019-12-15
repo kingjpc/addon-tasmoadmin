@@ -4,6 +4,10 @@
 # Configures TasmoAdmin
 # ==============================================================================
 
+declare app_root_dir=/var/www/tasmoadmin/tasmoadmin
+declare ingress_entry="$(bashio::addon.ingress_entry)"
+declare ingress_dir="${app_root_dir}${ingress_entry}"
+
 # Migrate from older installations
 if bashio::fs.directory_exists "/data/sonweb"; then
     bashio::log.info 'Migrating data from sonweb to tasmoadmin...'
@@ -33,3 +37,12 @@ fi
 bashio::log.debug 'Symlinking data directory to persistent storage location...'
 rm -f -r /var/www/tasmoadmin/tasmoadmin/data
 ln -s /data/tasmoadmin /var/www/tasmoadmin/tasmoadmin/data
+
+# Setup application filesystem as symlink to the app for the ingress
+mkdir -p "$(dirname ${ingress_dir})"
+ln -s "${app_root_dir}" "${ingress_dir}"
+
+# Apply application patches
+cd "${app_root_dir}" || bashio.exit.nok "Failed cd to ${app_root_dir} to apply patches"
+patch -p2 < /etc/tasmoadmin/patches/tasmoadmin-disable-auth.patch
+patch -p2 < /etc/tasmoadmin/patches/tasmoadmin-base-url.patch

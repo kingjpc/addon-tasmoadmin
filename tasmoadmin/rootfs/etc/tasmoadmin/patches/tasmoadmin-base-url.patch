@@ -1,0 +1,15 @@
+diff --git a/tasmoadmin/includes/top.php b/tasmoadmin/includes/top.php
+index 82e52f2..4db7715 100644
+--- a/tasmoadmin/includes/top.php
++++ b/tasmoadmin/includes/top.php
+@@ -27,6 +27,10 @@
+ 		    = $subdir = str_replace( "\\", "/", $subdir );
+ 	$subdir = $subdir == "//" ? "/" : $subdir;
+ 
++	if ( strlen(@$_SERVER[ 'INGRESS_ENTRY' ]) > 0 && @$_SERVER[ 'INGRESS_ENTRY' ] == $_SERVER[ 'HTTP_X_INGRESS_PATH' ] ) {
++		$subdir = $_SERVER[ 'INGRESS_ENTRY' ] . "/";
++	}
++
+ 
+ 	define( "_BASEURL_", $subdir );
+ 	define( '_APPROOT_', dirname( dirname( __FILE__ ) ).'/' );
